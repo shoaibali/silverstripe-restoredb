@@ -1,0 +1,20 @@
+{
+	"name": "silverstripe/restoredb",
+	"description": "SilverStripe restore database, purely PHP based. Does not require run exec commands on mysql client. Supports .sql and .gz backups. Backup files must NOT contain extended inserts",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe", "php", "database", "backup", "restore", "db", "mysql"],
+	"authors": [
+		{
+			"name": "Shoaib Ali",
+			"email": "shoaib@catalyst.net.nz"
+		}
+	],
+	"require": {
+		"silverstripe/framework": "3.1.*",
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.0.x-dev"
+		}
+	}
+}
