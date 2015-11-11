@@ -154,23 +154,23 @@ class RestoreDatabaseTask extends BuildTask {
 
 		while ($currentline < count($lines)) {
 
-			$dumpline = "";
+			$line = "";
 
 			// Keep going until we are at the end of line or end of file
-			while (!feof($file) && $this->endOfLine($dumpline)) {
-				$dumpline .= (!$compressed) ? fgets($file, $maxChunkSize) : gzgets($file, $maxChunkSize);
+			while (!feof($file) && $this->endOfLine($line)) {
+				$line .= (!$compressed) ? fgets($file, $maxChunkSize) : gzgets($file, $maxChunkSize);
 			}
 
 			// Line is empty, stop!
-			if ($dumpline === '') break;
+			if ($line === '') break;
 
-			$dumpline = $this->sanitize($dumpline, $currentline);
+			$line = $this->sanitize($line, $currentline);
 
 			// Do not process SQL comments
 			$skipcomment = false;
 			reset($comment);
 			foreach ($comment as $cv) {
-				if ($dumpline == "" || strpos($dumpline, $cv) === 0) {
+				if ($line == "" || strpos($line, $cv) === 0) {
 					$skipcomment = true;
 					break;
 				}
@@ -182,9 +182,9 @@ class RestoreDatabaseTask extends BuildTask {
 			}
 
 			// Build the query
-			$query .= $dumpline;
+			$query .= $line;
 
-			if (($this->delimiterFound(trim($dumpline)) || $this->queryDelimiter == '')) {
+			if (($this->delimiterFound(trim($line)) || $this->queryDelimiter == '')) {
 				DB::query($this->getQuery($query));
 				$query = "";
 			}
